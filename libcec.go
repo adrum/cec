@@ -192,6 +192,14 @@ func (c *Connection) Mute() error {
 	return nil
 }
 
+// SetHdmiPort - send an HDMI command code to the given address with the specified port
+func (c *Connection) SetHdmiPort(address int, port int) error {
+	if C.libcec_set_hdmi_port(c.connection, C.cec_logical_address(address), port) != 1 {
+		return errors.New("Error in cec_set_hdmi_port")
+	}
+	return nil
+}
+
 // KeyPress - send a key press (down) command code to the given address
 func (c *Connection) KeyPress(address int, key int) error {
 	if C.libcec_send_keypress(c.connection, C.cec_logical_address(address), C.cec_user_control_code(key), 1) != 1 {
